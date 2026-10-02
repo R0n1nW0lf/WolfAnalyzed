@@ -1,1 +1,388 @@
 
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WolfAnalyze Phase 1.4.6</title><style>
+:root{--bg:#07111f;--panel:#0c1a2b;--line:#254765;--text:#e8f2fb;--muted:#94aac0;--blue:#69c6ff;--red:#ff5d68;--good:#83e3aa;--warn:#ffd479;--cyan:#8de9e2;--purple:#d1a5ff}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#06101c,#0a1727 45%,#07111f);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}.wrap{max-width:1240px;margin:auto;padding:28px 18px 60px}header{text-align:center;margin-bottom:20px}h1{margin:0;font-size:36px}.wolf{color:var(--blue)}.analyze{color:var(--red)}.tag,.status,.hint{color:var(--muted)}.phase{display:inline-block;margin-top:8px;padding:4px 9px;border:1px solid var(--line);border-radius:999px;color:var(--good);font-size:12px}.notice{border:1px solid #735f2a;background:#211d12;padding:10px 13px;border-radius:10px;color:#f4dda1;margin-bottom:10px}.purpose{border:1px solid #254765;background:#0a1827;padding:10px 13px;border-radius:10px;color:#b8cee2;margin-bottom:16px}.purpose b{color:#e8f2fb}.grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:16px}@media(max-width:900px){.grid{grid-template-columns:1fr}}.card{background:#0c1a2bf0;border:1px solid var(--line);border-radius:14px;padding:15px;box-shadow:0 12px 35px #0004}.card h2{font-size:16px;margin:0 0 10px}.drop{border:2px dashed #376384;border-radius:12px;padding:14px;text-align:center;color:var(--muted);margin-bottom:10px}.drop.drag{border-color:var(--blue);background:#102b43}textarea{width:100%;min-height:310px;resize:vertical;background:#050c14;color:#dceafb;border:1px solid var(--line);border-radius:10px;padding:12px;font:13px/1.45 Consolas,monospace}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}button{background:#173654;color:#eef8ff;border:1px solid #35678d;border-radius:9px;padding:9px 13px;font-weight:650;cursor:pointer}button:hover{background:#20476c}.primary{background:#8a2730;border-color:#d84d59}.danger{background:#542626;border-color:#8c4141}.opts{display:flex;gap:14px;flex-wrap:wrap;margin:10px 0}.opts label{display:flex;align-items:center;gap:6px}.summary{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px}@media(max-width:760px){.summary{grid-template-columns:repeat(2,1fr)}}.stat{background:#091522;border:1px solid #1d3a53;border-radius:9px;padding:8px;text-align:center}.stat b{display:block;font-size:19px;color:var(--blue)}details{border:1px solid #203f59;border-radius:10px;margin:9px 0;overflow:hidden}summary{cursor:pointer;padding:10px 12px;background:#0d2134;font-weight:700}.body{padding:10px 12px;background:#07131f;white-space:pre-wrap;word-break:break-word;font:13px/1.55 Consolas,monospace}.empty{color:#62798e;font-style:italic}.raw{max-height:360px;overflow:auto}.field{display:grid;grid-template-columns:190px 1fr;gap:8px;padding:4px 0;border-bottom:1px dotted #18334a}.field:last-child{border:0}.key{color:#9db6cb}.val{color:#edf6ff}.red{color:#ff8f98}.good{color:var(--good)}mark{padding:1px 3px;border-radius:3px;color:#081018}mark.net{background:var(--cyan)}mark.alert{background:#ff9b9b}mark.method{background:var(--warn)}mark.hash{background:#ffaaa0}mark.threat{background:#ffb36b;font-weight:800}mark.cve{background:#ff7f87;font-weight:800}mark.tool{background:#c5a3ff;font-weight:800}mark.enc{background:var(--purple)}mark.decoded{background:#ff6b75;color:#07111f;font-weight:800}mark.product{background:#7dcfff}mark.user{background:#d8b4fe}mark.resultok{background:#83e3aa}mark.resultbad{background:#ff8f98}mark.port{background:#ffd479}mark.bytes{background:#b8c8ff}mark.proto{background:#8de9e2}mark.sev{background:#ffbd8a}mark.action{background:#f7c873}mark.email{background:#a7d8ff}mark.auth{background:#b9e7ba}mark.attach{background:#ffc89f}.reportbox{margin-top:12px;padding:10px;border:1px solid #203f59;border-radius:10px;background:#091522}.reportbox label{display:block;font-weight:700;margin-bottom:6px}.reportbox input{width:100%;background:#050c14;color:#e8f2fb;border:1px solid var(--line);border-radius:8px;padding:9px 10px;font:13px Consolas,monospace}.overlay{position:fixed;inset:0;background:#030914f2;z-index:50;display:none;align-items:center;justify-content:center;text-align:center}.overlay.show{display:flex}.box{width:min(520px,90vw);background:#0c1a2b;border:1px solid #315574;border-radius:16px;padding:28px}.spinner{width:54px;height:54px;border:5px solid #19344c;border-top-color:var(--red);border-radius:50%;margin:16px auto;animation:spin 1s linear infinite}.spinner.done{animation:none;border-color:#19344c;border-top-color:var(--good)}.spinner.error{animation:none;border-color:#19344c;border-top-color:var(--red)}@keyframes spin{to{transform:rotate(360deg)}}.bar{height:9px;background:#08131f;border:1px solid #29445d;border-radius:99px;overflow:hidden}.bar>div{height:100%;width:0;background:#69c6ff}.footer{text-align:center;color:#668097;font-size:12px;margin-top:18px}
+</style></head><body><div class="wrap"><header><h1><span class="wolf">Wolf</span><span class="analyze">Analyze</span></h1><div class="tag">Preserve the evidence. Parse the structure. Make logs easier to investigate.</div><span class="phase">Phase 1.4.6 • Offline</span></header><div class="notice"><b>Evidence rule:</b> Raw Original is never modified. Parsing, timezone conversion, decoding, and highlighting appear only in derived analyst views. WolfAnalyze does not decide whether activity is malicious.</div><div class="purpose"><b>What WolfAnalyze is for:</b> structured or semi-structured security evidence such as firewall, WAF, IDS/IPS, VPN, DNS, proxy, authentication, EDR/Sysmon, web/server logs, SIEM exports, JSON, CSV, text logs, and email headers (.eml). It looks for recognizable timestamps, fields, events, headers, indicators, and security terms. <b>Random notes, ordinary prose, or unrelated text are not logs</b> and may not produce meaningful analysis. If WolfAnalyze cannot recognize a log structure, it will say so instead of treating every line as a security event.</div><div class="grid"><section class="card"><h2>1. Security Log Input</h2><div id="drop" class="drop">Drop a .log/.txt/.json/.csv/.eml file here, or paste log/email text below</div><textarea id="input" spellcheck="false" placeholder="Paste security log or email header data here..."></textarea><div class="opts"><label><input id="localTime" type="checkbox"> Convert recognized timestamps to device timezone</label><label><input id="decode" type="checkbox"> Reveal recognized CHR() encoding</label></div><div class="actions"><button class="primary" id="analyzeBtn">Analyze Log</button><button id="sample">Load Safe Sample</button><button class="danger" id="clear">Clear</button></div><div id="status" class="status">No data loaded.</div><div class="hint">Device timezone: <span id="tz"></span></div></section><section class="card"><h2>2. Analyst View</h2><div class="summary"><div class="stat"><b id="cEvents">0</b>Events</div><div class="stat"><b id="cIPs">0</b>IPs</div><div class="stat"><b id="cDomains">0</b>Domains</div><div class="stat"><b id="cAlerts">0</b>Alert Terms</div><div class="stat"><b id="cEnc">0</b>Encoded</div></div><div id="results"><div class="empty">Parsed analyst view will appear here.</div></div><div class="reportbox"><label for="reportName">Report filename</label><input id="reportName" maxlength="120" spellcheck="false" placeholder="Example: VPN_Investigation"><div class="hint">Original filename is used as the base. Rename it if wanted; WolfAnalyze adds _Reports when saved.</div><div class="actions"><button id="saveTxt">Save Report .txt</button><button id="saveHtml">Save Report .html</button></div></div></section></div><div class="footer">WolfAnalyze Phase 1.4.6 • Local browser analysis • No network requests</div></div><div id="overlay" class="overlay"><div class="box"><h2>WolfAnalyze — Processing Log</h2><div id="fileLabel"></div><div class="spinner"></div><div id="pct">Processing...</div><div class="bar"><div id="barFill"></div></div><div id="bytes" class="status"></div><p class="status">Please wait until processing is complete.<br>Do not close or refresh WolfAnalyze.</p></div></div><script>
+'use strict';const $=x=>document.getElementById(x),input=$('input'),results=$('results'),status=$('status'),reportName=$('reportName');$('tz').textContent=Intl.DateTimeFormat().resolvedOptions().timeZone||'Local device time';let raw='',fileName='Pasted log',lastReport=null;reportName.value='WolfAnalyze';const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const uniq=a=>[...new Set(a.filter(Boolean))];
+function fmtReadableBytes(n){
+ if(n<1024)return n+' B';
+ if(n<1048576)return(n/1024).toFixed(2)+' KB';
+ if(n<1073741824)return(n/1048576).toFixed(2)+' MB';
+ return(n/1073741824).toFixed(2)+' GB'
+}
+function fmtBytes(n){
+ const exact=Number(n).toLocaleString('en-US')+' '+(Number(n)===1?'byte':'bytes');
+ return n<1024?exact:`${exact} (${fmtReadableBytes(n)})`
+}
+function fields(input){
+ if(input&&typeof input==='object'&&!Array.isArray(input))return Object.entries(input);
+ const line=String(input||''),out=[];
+ try{const o=JSON.parse(line);if(o&&typeof o==='object'&&!Array.isArray(o))return Object.entries(o)}catch{}
+ const iso=line.match(/^(\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d+)?(?:Z|[+-]\d\d:\d\d))\b/);if(iso)out.push(['timestamp',iso[1]]);
+ const re=/([A-Za-z_][\w.-]*)=("[^"]*"|'[^']*'|[^\s]+)/g;let m;while((m=re.exec(line)))out.push([m[1],m[2].replace(/^['"]|['"]$/g,'')]);
+ if(!out.length){const sm=line.match(/^(\w{3}\s+\d{1,2}\s+\d\d:\d\d:\d\d)\s+(\S+)\s+(.+)$/);if(sm)out.push(['timestamp',sm[1]],['host',sm[2]],['message',sm[3]])}
+ return out
+}
+function normalizeKey(k){
+ let x=String(k||'').trim().toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'');
+ const a={device_name:'devname',product_log_source:'product',source_ip:'src_ip',source_port:'src_port',destination_ip:'dst_ip',destination_port:'dst_port',remote_ip:'remip',tunnel_ip:'tunnelip',tool_scanner:'scanner',packets_sent:'sentpkt',packets_received:'rcvdpkt',parent_process:'parent_process',command_line:'commandline'};
+ return a[x]||x
+}
+function csvRows(text){
+ const rows=[];let row=[],cell='',q=false;
+ for(let i=0;i<text.length;i++){
+  const c=text[i];
+  if(q){if(c==='"'&&text[i+1]==='"'){cell+='"';i++}else if(c==='"')q=false;else cell+=c}
+  else if(c==='"')q=true;
+  else if(c===','){row.push(cell);cell=''}
+  else if(c==='\n'){row.push(cell.replace(/\r$/,''));rows.push(row);row=[];cell=''}
+  else cell+=c
+ }
+ if(cell.length||row.length){row.push(cell.replace(/\r$/,''));rows.push(row)}
+ return rows.filter(r=>r.some(v=>String(v).trim()))
+}
+function eventFromObject(obj,rawText,format){return{fields:Object.entries(obj).map(([k,v])=>[normalizeKey(k),v==null?'':String(v)]),raw:rawText||JSON.stringify(obj,null,2),format}}
+function parseColonBlock(block){
+ const obj={},lines=block.split(/\r?\n/).filter(x=>x.trim());if(!lines.length)return null;
+ const head=lines[0].match(/^\[([^\]]+)\]\s*(.*)$/);let start=0;
+ if(head){obj.timestamp=head[1].trim();if(head[2].trim())obj.event_label=head[2].trim();start=1}
+ for(let i=start;i<lines.length;i++){const m=lines[i].match(/^\s*([^:]{1,80}):\s*(.*)$/);if(m)obj[normalizeKey(m[1])]=m[2].trim()}
+ return Object.keys(obj).length?eventFromObject(obj,block,'TEXT BLOCK'):null
+}
+
+function looksLikeEmail(text){
+ const head=String(text||'').split(/\r?\n\r?\n/,1)[0],keys=['From','To','Subject','Date','Message-ID','Received','Return-Path','Authentication-Results'];
+ let score=0;
+ for(const k of keys)if(new RegExp('^'+k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+':','mi').test(head))score++;
+ return score>=3
+}
+function unfoldEmailHeaders(headerText){
+ const out=[];
+ for(const line of String(headerText||'').split(/\r?\n/)){
+  if(/^[ \t]/.test(line)&&out.length)out[out.length-1]+=' '+line.trim();
+  else out.push(line)
+ }
+ return out
+}
+function parseEmail(text){
+ const rawText=String(text||''),m=rawText.match(/\r?\n\r?\n/),cut=m?m.index:rawText.length;
+ const headerText=rawText.slice(0,cut),body=m?rawText.slice(cut+m[0].length):'';
+ const pairs=[],counts={};
+ for(const line of unfoldEmailHeaders(headerText)){
+  const x=line.match(/^([^:]{1,120}):\s*(.*)$/);if(!x)continue;
+  let k=normalizeKey(x[1]),v=x[2].trim();
+  const base=k;counts[base]=(counts[base]||0)+1;
+  if(base==='received')k='received_'+counts[base];
+  else if(counts[base]>1)k=base+'_'+counts[base];
+  pairs.push([k,v])
+ }
+ const existing=new Set(pairs.map(([k])=>k));
+ const add=(k,v)=>{if(v&&!existing.has(k)){pairs.push([k,v]);existing.add(k)}};
+ const attachment=(body.match(/Content-Disposition:\s*attachment;[\s\S]{0,250}?filename="?([^"\r\n;]+)"?/i)||[])[1]
+               ||(body.match(/Content-Type:[^\r\n;]+;[\s\S]{0,180}?name="?([^"\r\n;]+)"?/i)||[])[1];
+ add('attachment_name',attachment);
+ const embedded=[...rawText.matchAll(/\b(?:https?|hxxps?):\/\/[^\s<>"']+/gi)].map(x=>x[0]);
+ if(embedded.length)add('embedded_urls',embedded.join(', '));
+ return{fields:pairs,raw:rawText,format:'EMAIL / EML'}
+}
+function emailValues(event,key){
+ return eventFields(event).filter(([k])=>String(k).toLowerCase()===key||String(k).toLowerCase().startsWith(key+'_')).map(([,v])=>String(v))
+}
+function emailFirst(event,...keys){
+ for(const key of keys){const v=emailValues(event,key)[0];if(v)return v}return''
+}
+function emailSummaryText(rep){
+ if(rep.format!=='EMAIL / EML'||!rep.events.length)return'Not an email/EML source.';
+ const ev=rep.events[0],lines=[],add=(k,v)=>{if(v)lines.push(`${k}: ${v}`)};
+ lines.push('[EMAIL IDENTITY]');
+ add('From',emailFirst(ev,'from'));add('Reply-To',emailFirst(ev,'reply_to'));add('To',emailFirst(ev,'to'));add('CC',emailFirst(ev,'cc'));add('Subject',emailFirst(ev,'subject'));add('Date',emailFirst(ev,'date'));add('Message-ID',emailFirst(ev,'message_id'));add('Return-Path',emailFirst(ev,'return_path'));
+ lines.push('','[AUTHENTICATION]');
+ add('Authentication-Results',emailFirst(ev,'authentication_results'));add('Received-SPF',emailFirst(ev,'received_spf'));add('DKIM-Signature',emailFirst(ev,'dkim_signature'));add('ARC-Authentication-Results',emailFirst(ev,'arc_authentication_results'));add('ARC-Seal',emailFirst(ev,'arc_seal'));
+ lines.push('','[ROUTING / ORIGIN]');
+ add('X-Originating-IP',emailFirst(ev,'x_originating_ip'));
+ const received=emailValues(ev,'received');received.forEach((v,i)=>add(`Received Hop ${i+1}`,v));
+ lines.push('','[CLIENT / MIME]');
+ add('User-Agent',emailFirst(ev,'user_agent'));add('X-Mailer',emailFirst(ev,'x_mailer'));add('MIME-Version',emailFirst(ev,'mime_version'));add('Content-Type',emailFirst(ev,'content_type'));add('X-Priority',emailFirst(ev,'x_priority'));
+ lines.push('','[ATTACHMENTS]');
+ add('Attachment Name',emailFirst(ev,'x_attachment_name','attachment_name'));add('Attachment SHA-256',emailFirst(ev,'x_attachment_sha256','attachment_sha256'));add('Attachment MD5',emailFirst(ev,'x_attachment_md5','attachment_md5'));add('Content-Disposition',emailFirst(ev,'content_disposition'));
+ lines.push('','[THREAT / SCANNER]');
+ add('Threat Category',emailFirst(ev,'x_threat_category','threat_category'));add('Scanner Result',emailFirst(ev,'x_scanner_result','scanner_result'));add('Spam Status',emailFirst(ev,'x_spam_status'));add('Spam Flag',emailFirst(ev,'x_spam_flag'));
+ lines.push('','[URLS / LINKS]');
+ add('Embedded URL',emailFirst(ev,'x_embedded_url','embedded_urls'));add('URL Count',emailFirst(ev,'x_url_count','url_count'));
+ return lines.join('\n')
+}
+
+
+function hasRecognizableLogStructure(text){
+ const t=String(text||'').trim();
+ if(!t)return false;
+ if(looksLikeEmail(t))return true;
+ if(/^\s*[\[{]/.test(t)){try{JSON.parse(t);return true}catch{}}
+ const lines=t.split(/\r?\n/).filter(x=>x.trim()).slice(0,80);
+ let score=0;
+ for(const line of lines){
+  const fs=fields(line);
+  if(fs.length>=2)score+=2;
+  else if(fs.length===1)score++;
+  if(/\b(?:src(?:_ip|ip)?|dst(?:_ip|ip)?|src_port|dst_port|action|result|severity|event_id|product|host|timestamp|proto|protocol|service|user|username|process|hash|sha256|md5)\s*[=:]/i.test(line))score+=2;
+  if(/^\[?\d{4}-\d\d-\d\d[ T]/.test(line)||/^\w{3}\s+\d{1,2}\s+\d\d:\d\d:\d\d\s+\S+/.test(line))score++;
+ }
+ return score>=2
+}
+
+function parseEvents(text){
+ const trimmed=String(text||'').trim();if(!trimmed)return{format:'EMPTY',events:[]};
+ if(/\.eml$/i.test(fileName)||looksLikeEmail(trimmed))return{format:'EMAIL / EML',events:[parseEmail(trimmed)]};
+ try{
+  const j=JSON.parse(trimmed);
+  if(Array.isArray(j)){const arr=j.filter(x=>x&&typeof x==='object'&&!Array.isArray(x)).map(x=>eventFromObject(x,JSON.stringify(x,null,2),'JSON'));if(arr.length)return{format:'JSON',events:arr}}
+  if(j&&typeof j==='object'){
+   const maybe=Array.isArray(j.events)?j.events:null;
+   if(maybe){const arr=maybe.filter(x=>x&&typeof x==='object').map(x=>eventFromObject(x,JSON.stringify(x,null,2),'JSON'));if(arr.length)return{format:'JSON',events:arr}}
+   return{format:'JSON',events:[eventFromObject(j,JSON.stringify(j,null,2),'JSON')]}
+  }
+ }catch{}
+ const rows=csvRows(trimmed),known=/^(?:timestamp|date|time|device|devname|host|product|type|src(?:_ip|ip)?|source_ip|dst(?:_ip|ip)?|destination_ip|src_port|dst_port|protocol|proto|action|result|severity|attack_type|cve|scanner|signature|bytes_sent|bytes_received)$/i;
+ if(rows.length>=2&&rows[0].length>=2&&rows[0].some(h=>known.test(normalizeKey(h)))){
+  const headers=rows[0].map(normalizeKey),events=[];
+  for(const r of rows.slice(1)){const o={};headers.forEach((h,i)=>{if(h)o[h]=r[i]??''});events.push(eventFromObject(o,r.join(','),'CSV'))}
+  return{format:'CSV',events}
+ }
+ const blocks=trimmed.split(/\r?\n\s*\r?\n/).filter(Boolean);
+ if(blocks.length>1&&blocks.some(b=>/^\s*\[[^\]]+\]/.test(b)&&/\n\s*[^:\n]{1,80}:\s*/.test(b))){return{format:'TEXT BLOCK',events:blocks.map(parseColonBlock).filter(Boolean)}}
+ if(!hasRecognizableLogStructure(trimmed)){
+  return{format:'UNRECOGNIZED TEXT',events:[{fields:[],raw:trimmed,format:'UNRECOGNIZED TEXT'}]}
+ }
+ const lines=trimmed.split(/\r?\n/).filter(x=>x.trim()),events=[];
+ for(const line of lines){const fs=fields(line);events.push({fields:fs,raw:line,format:fs.length?'KEY/VALUE':'TEXT'})}
+ return{format:events.every(e=>e.format==='KEY/VALUE')?'KEY/VALUE LOG':'MIXED TEXT',events}
+}
+function eventFields(event){return event&&Array.isArray(event.fields)?event.fields:[]}
+function parseRecognizedTimestamp(v){
+ const raw=String(v||'').trim();
+ let normalized=raw;
+ if(/^\d{4}-\d\d-\d\d \d\d:\d\d:\d\d(?:\.\d+)? UTC$/i.test(raw)){
+  normalized=raw.replace(' ','T').replace(/\s+UTC$/i,'Z')
+ }
+ if(/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d+)?(?:Z|[+-]\d\d:\d\d)$/i.test(normalized)){
+  const d=new Date(normalized);return isNaN(d)?null:d
+ }
+ if(/^(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun),\s+\d{1,2}\s+[A-Za-z]{3}\s+\d{4}\s+\d\d:\d\d:\d\d\s+(?:[+-]\d{4}|GMT|UTC)$/i.test(raw)){
+  const d=new Date(raw);return isNaN(d)?null:d
+ }
+ return null
+}
+function localize(v){
+ if(!$('localTime').checked)return null;
+ const d=parseRecognizedTimestamp(v);
+ if(!d)return null;
+ return d.toLocaleString(undefined,{year:'numeric',month:'2-digit',day:'2-digit',hour:'numeric',minute:'2-digit',second:'2-digit',timeZoneName:'short'})
+}
+function decodeChr(text){const seq=/CHR\(\s*(\d{1,3})\s*\)(?:\s*\|\|\s*CHR\(\s*(\d{1,3})\s*\))*/gi,out=[];let m;while((m=seq.exec(text))){const nums=[...m[0].matchAll(/CHR\(\s*(\d{1,3})\s*\)/gi)].map(x=>+x[1]);if(nums.every(n=>n>=0&&n<=255))out.push({original:m[0],decoded:String.fromCharCode(...nums),nums})}return out}
+function sanitizeFilename(v){v=String(v||'').trim().replace(/[<>:\"/\\|?*\x00-\x1F]/g,'_').replace(/[ .]+$/g,'').replace(/_+/g,'_');if(!v)v='WolfAnalyze';return v.slice(0,110)}
+function sourceStem(name){return String(name||'').replace(/^.*[\\/]/,'').replace(/\.[^.]+$/,'').trim()||'WolfAnalyze'}
+function reportBase(){let b=sanitizeFilename(reportName.value||sourceStem(fileName));b=b.replace(/_reports$/i,'');return (b||'WolfAnalyze')+'_Reports'}
+const interestKeys=new Set(['product','vendor','device','devname','hostname','host','type','subtype','sub_type','main_type','event_type','event_id','logid','username','user','account','account_name','srcuser','dstuser','src','srcip','src_ip','source_ip','srcport','src_port','source_port','sport','dst','dstip','dst_ip','destination_ip','dstport','dst_port','destination_port','dport','proto','protocol','service','action','result','status','outcome','severity','severity_level','level','policy','rule','rule_name','signature','signature_id','signature_subclass','attack_type','http_method','http_status','status_code','http_host','http_url','url','uri','domain','query','qtype','message','msg','process','process_name','parent','parent_process','command','commandline','cmdline','file','path','hash','md5','sha1','sha256','sha512','sentbyte','sentbytes','sent_byte','bytes_sent','tx_bytes','rcvdbyte','receivedbyte','receivedbytes','bytes_received','rx_bytes','sentpkt','rcvdpkt','duration','srccountry','dstcountry','remip','tunnelip','threat','threat_name','threatname','category','cve','cve_id','vulnerability','vulnerability_name','scanner','tool','malware','malware_family','family','application','app','app_proto','from','reply_to','to','cc','bcc','subject','message_id','return_path','mime_version','content_type','content_disposition','user_agent','x_mailer','x_priority','authentication_results','received_spf','dkim_signature','arc_authentication_results','arc_seal','x_originating_ip','received_1','received_2','received_3','received_4','received_5','x_attachment_name','attachment_name','x_attachment_sha256','attachment_sha256','x_attachment_md5','attachment_md5','x_threat_category','threat_category','x_scanner_result','scanner_result','x_embedded_url','embedded_urls','x_url_count','url_count','x_spam_status','x_spam_flag']);
+function fieldClass(k,v){
+ const key=String(k).toLowerCase(),val=String(v).toLowerCase();
+ if(['from','reply_to','to','cc','bcc','subject','message_id','return_path','received_1','received_2','received_3','received_4','received_5','x_originating_ip','user_agent','x_mailer'].includes(key))return'email';
+ if(['authentication_results','received_spf','dkim_signature','arc_authentication_results','arc_seal'].includes(key))return'auth';
+ if(['x_attachment_name','attachment_name','x_attachment_sha256','attachment_sha256','x_attachment_md5','attachment_md5','content_disposition'].includes(key))return'attach';
+
+ if(['hash','md5','sha1','sha256','sha512'].includes(key))return'hash';
+ if(['cve','cve_id'].includes(key)||/\bcve-\d{4}-\d{4,7}\b/i.test(val))return'cve';
+ if(['scanner','tool'].includes(key))return'tool';
+ if(['attack_type','threat','threat_name','threatname','category','signature','signature_id','signature_subclass','rule','rule_name','vulnerability','vulnerability_name','malware','malware_family','family'].includes(key))return'threat';
+ if(['product','vendor','device','devname','hostname','host'].includes(key))return'product';
+ if(['username','user','account','account_name','srcuser','dstuser'].includes(key))return'user';
+ if(['srcport','src_port','source_port','sport','dstport','dst_port','destination_port','dport'].includes(key))return'port';
+ if(['sentbyte','sentbytes','sent_byte','bytes_sent','tx_bytes','rcvdbyte','receivedbyte','receivedbytes','bytes_received','rx_bytes','sentpkt','rcvdpkt','duration'].includes(key))return'bytes';
+ if(['proto','protocol','service','application','app','app_proto'].includes(key))return'proto';
+ if(['severity','severity_level','level'].includes(key))return'sev';
+ if(['action'].includes(key))return'action';
+ if(['result','status','outcome'].includes(key)){
+  if(/success|succeed|allow|accept|passed|ok/.test(val))return'resultok';
+  if(/fail|failed|deny|denied|block|blocked|drop|reject|error/.test(val))return'resultbad'
+ }
+ return''
+}
+function prettyKey(k){const m={from:'From',reply_to:'Reply-To',to:'To',cc:'CC',bcc:'BCC',subject:'Subject',message_id:'Message-ID',return_path:'Return-Path',mime_version:'MIME-Version',content_type:'Content-Type',content_disposition:'Content-Disposition',user_agent:'User-Agent',x_mailer:'X-Mailer',x_priority:'X-Priority',authentication_results:'Authentication-Results',received_spf:'Received-SPF',dkim_signature:'DKIM-Signature',arc_authentication_results:'ARC-Authentication-Results',arc_seal:'ARC-Seal',x_originating_ip:'X-Originating-IP',received_1:'Received Hop 1',received_2:'Received Hop 2',received_3:'Received Hop 3',received_4:'Received Hop 4',received_5:'Received Hop 5',x_attachment_name:'Attachment Name',attachment_name:'Attachment Name',x_attachment_sha256:'Attachment SHA-256',attachment_sha256:'Attachment SHA-256',x_attachment_md5:'Attachment MD5',attachment_md5:'Attachment MD5',x_threat_category:'Threat Category',threat_category:'Threat Category',x_scanner_result:'Scanner Result',scanner_result:'Scanner Result',x_embedded_url:'Embedded URL',embedded_urls:'Embedded URLs',x_url_count:'URL Count',url_count:'URL Count',x_spam_status:'Spam Status',x_spam_flag:'Spam Flag',timestamp:'Timestamp',date:'Date',time:'Time',event_label:'Event Type',product:'Product / Log Source',vendor:'Vendor',device:'Device',devname:'Device Name',host:'Host',hostname:'Host',user:'Username',username:'Username',account:'Account',account_name:'Account',remip:'Remote IP',tunnelip:'Tunnel IP',src:'Source IP',srcip:'Source IP',src_ip:'Source IP',source_ip:'Source IP',srcport:'Source Port',src_port:'Source Port',source_port:'Source Port',sport:'Source Port',dst:'Destination IP',dstip:'Destination IP',dst_ip:'Destination IP',destination_ip:'Destination IP',dstport:'Destination Port',dst_port:'Destination Port',destination_port:'Destination Port',dport:'Destination Port',proto:'Protocol',protocol:'Protocol',service:'Service',action:'Action',result:'Result',status:'Status',outcome:'Result',severity:'Severity',severity_level:'Severity',level:'Severity',sentbyte:'Bytes Sent',sentbytes:'Bytes Sent',bytes_sent:'Bytes Sent',tx_bytes:'Bytes Sent',rcvdbyte:'Bytes Received',receivedbytes:'Bytes Received',bytes_received:'Bytes Received',rx_bytes:'Bytes Received',sentpkt:'Packets Sent',rcvdpkt:'Packets Received',duration:'Duration',policy:'Policy / Rule',signature:'Signature',signature_id:'Signature ID',signature_subclass:'Signature Subclass',rule:'Rule',rule_name:'Rule',cve:'CVE',cve_id:'CVE',vulnerability:'Vulnerability',vulnerability_name:'Vulnerability',scanner:'Tool / Scanner',tool:'Tool / Scanner',malware:'Malware Family',malware_family:'Malware Family',family:'Malware Family',application:'Application',app:'Application',app_proto:'Application Protocol',attack_type:'Attack Type',threat:'Threat',threat_name:'Threat',threatname:'Threat',category:'Category',http_method:'HTTP Method',http_status:'HTTP Status',http_host:'HTTP Host',http_url:'HTTP URL',url:'URL',uri:'URI',domain:'Domain',query:'Query',qtype:'Query Type',message:'Message',msg:'Message',hash:'Hash',md5:'MD5',sha1:'SHA-1',sha256:'SHA-256',sha512:'SHA-512',process:'Process',process_name:'Process',parent:'Parent Process',parent_process:'Parent Process',command:'Command',commandline:'Command Line',cmdline:'Command Line',file:'File',path:'Path'};return m[String(k).toLowerCase()]||k}
+function download(name,type,data){const a=document.createElement('a'),u=URL.createObjectURL(new Blob([data],{type}));a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000)}
+function highlight(s){
+ let h=esc(s);
+
+ h=h.replace(/\b(?:From|Reply-To|Return-Path|To|CC|BCC|Subject|Message-ID|Received|Authentication-Results|Received-SPF|DKIM-Signature|ARC-Authentication-Results|ARC-Seal|X-Originating-IP|X-Mailer|User-Agent|MIME-Version|Content-Type|Content-Disposition|X-Priority)\b(?=:)/gi,'<mark class="email">$&</mark>');
+ h=h.replace(/\b(?:SPF|DKIM|DMARC|ARC|SMTP|SMTPS|ESMTP|ESMTPS)\b/gi,'<mark class="auth">$&</mark>');
+ h=h.replace(/\b(?:attachment|filename|X-Attachment-Name|X-Attachment-SHA256|X-Attachment-MD5)\b/gi,'<mark class="attach">$&</mark>');
+ h=h.replace(/\b(?:softfail|neutral|temperror|permerror|quarantine|suspicious|malicious)\b/gi,'<mark class="alert">$&</mark>');
+ h=h.replace(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi,'<mark class="email">$&</mark>');
+
+ h=h.replace(/\bCVE-\d{4}-\d{4,7}\b/gi,'<mark class="cve">$&</mark>');
+ h=h.replace(/\b(?:Nikto|Nmap|Masscan|sqlmap|Gobuster|Dirbuster|Nuclei|Metasploit|Hydra|Mimikatz|curl|wget)\b/gi,'<mark class="tool">$&</mark>');
+ h=h.replace(/\bBurp Suite\b/gi,'<mark class="tool">$&</mark>');
+ h=h.replace(/\b(?:SQL Injection|Cross-Site Scripting|XSS|Directory Traversal|Path Traversal|Command Injection|Code Injection|Brute Force|Password Spraying|Credential Stuffing|XXE|XML External Entity|IDOR|Insecure Direct Object Reference|Open Redirect|LFI|Local File Inclusion|RFI|Remote File Inclusion|SSRF|Server-Side Request Forgery|DNS Tunneling|DNS Hijacking|C2|Command and Control|Beacon|Trojan|Botnet|Ransomware|DGA|Port Scan|Reconnaissance|Phishing)\b/gi,'<mark class="threat">$&</mark>');
+ h=h.replace(/\b(?:25[0-5]|2[0-4]\d|1?\d?\d)(?:\.(?:25[0-5]|2[0-4]\d|1?\d?\d)){3}\b/g,'<mark class="net">$&</mark>');
+ h=h.replace(/\b[a-fA-F0-9]{128}\b|\b[a-fA-F0-9]{64}\b|\b[a-fA-F0-9]{40}\b|\b[a-fA-F0-9]{32}\b/g,'<mark class="hash">$&</mark>');
+ h=h.replace(/\b(?:GET|POST|PUT|DELETE|PATCH|HEAD|OPTIONS|TRACE|CONNECT)\b/g,'<mark class="method">$&</mark>');
+ h=h.replace(/\b(?:ALERT|BLOCK|DENY|DROP|REJECT|CRITICAL|HIGH)\b/gi,'<mark class="alert">$&</mark>');
+ h=h.replace(/CHR\(\d{1,3}\)/gi,'<mark class="enc">$&</mark>');
+ h=h.replace(/\b(?:VPN|WAF|Firewall|NGFW|IDS|IPS|Sysmon|EDR|Proxy|DNS|DHCP|Splunk|ArcSight|Suricata|Snort)\b/gi,'<mark class="product">$&</mark>');
+ h=h.replace(/\b(?:SUCCESS|SUCCEEDED|ALLOW|ALLOWED|ACCEPT|ACCEPTED|PASS|PASSED)\b/gi,'<mark class="resultok">$&</mark>');
+ h=h.replace(/\b(?:FAIL|FAILED|FAILURE|DENY|DENIED|BLOCK|BLOCKED|DROP|DROPPED|REJECT|REJECTED|ERROR)\b/gi,'<mark class="resultbad">$&</mark>');
+ h=h.replace(/\b(?:TCP|UDP|ICMP|HTTP|HTTPS|TLS|SSH|SMTP|FTP|DNS)\b/g,'<mark class="proto">$&</mark>');
+ return h
+}
+function workingView(text){
+ let out=text;
+ if($('localTime').checked){
+  const convert=v=>{
+   const d=parseRecognizedTimestamp(v);
+   if(!d)return v;
+   const local=d.toLocaleString(undefined,{year:'numeric',month:'2-digit',day:'2-digit',hour:'numeric',minute:'2-digit',second:'2-digit',timeZoneName:'short'});
+   return `${local} [original: ${v}]`
+  };
+  out=out.replace(/\b\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d+)?(?:Z|[+-]\d\d:\d\d)\b/g,convert);
+  out=out.replace(/\b\d{4}-\d\d-\d\d \d\d:\d\d:\d\d(?:\.\d+)? UTC\b/gi,convert);
+  out=out.replace(/\b(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun),\s+\d{1,2}\s+[A-Za-z]{3}\s+\d{4}\s+\d\d:\d\d:\d\d\s+(?:[+-]\d{4}|GMT|UTC)\b/gi,convert)
+ }
+ if($('decode').checked){
+  for(const x of decodeChr(out))out=out.split(x.original).join(`[[WOLFDECODE:${x.decoded}]] [original: ${x.original}]`)
+ }
+ return out
+}
+function highlightWorking(s){let h=highlight(s);return h.replace(/\[\[WOLFDECODE:([\s\S]*?)\]\]/g,'<mark class="decoded">DECODED: $1</mark>')}
+
+function addUniqueCI(arr,value){
+ const v=String(value||'').trim();
+ if(v&&!arr.some(x=>x.toLowerCase()===v.toLowerCase()))arr.push(v)
+}
+const knownSecurityTools=[
+ 'Nikto','Nmap','Masscan','sqlmap','Gobuster','Dirbuster','Burp Suite',
+ 'Nuclei','Metasploit','Hydra','Mimikatz','curl','wget'
+];
+const knownAttackTerms=[
+ 'SQL Injection','Cross-Site Scripting','XSS','Directory Traversal','Path Traversal',
+ 'Command Injection','Code Injection','Brute Force','Password Spraying','Credential Stuffing',
+ 'XXE','XML External Entity','IDOR','Insecure Direct Object Reference','Open Redirect',
+ 'LFI','Local File Inclusion','RFI','Remote File Inclusion','SSRF','Server-Side Request Forgery',
+ 'DNS Tunneling','DNS Hijacking','C2','Command and Control','Beacon','Trojan','Botnet',
+ 'Ransomware','DGA','Port Scan','Reconnaissance','Phishing','Spoofing','Spam','Business Email Compromise','BEC','Credential Harvesting','Impersonation'
+];
+function securityFindings(repOrText){
+ const text=typeof repOrText==='string'?repOrText:String(repOrText.raw||''),events=(repOrText&&repOrText.events)||parseEvents(text).events;
+ const out={attacks:[],cves:[],tools:[],signatures:[],vulnerabilities:[],malware:[]};
+ for(const m of text.matchAll(/\bCVE-\d{4}-\d{4,7}\b/gi))addUniqueCI(out.cves,m[0].toUpperCase());
+ for(const tool of knownSecurityTools){const re=new RegExp('(?<![A-Za-z0-9])'+tool.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?![A-Za-z0-9])','gi');for(const m of text.matchAll(re))addUniqueCI(out.tools,m[0])}
+ for(const term of knownAttackTerms){const re=new RegExp('(?<![A-Za-z0-9])'+term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?![A-Za-z0-9])','gi');for(const m of text.matchAll(re))addUniqueCI(out.attacks,m[0])}
+ for(const ev of events)for(const [k,v] of eventFields(ev)){
+  const key=String(k).toLowerCase(),val=String(v);
+  if(['attack_type','threat','threat_name','threatname','category','signature_subclass','x_threat_category','threat_category'].includes(key))addUniqueCI(out.attacks,val);
+  if(['scanner','tool'].includes(key))addUniqueCI(out.tools,val);
+  if(['signature','signature_id','rule','rule_name','policy'].includes(key))addUniqueCI(out.signatures,val);
+  if(['vulnerability','vulnerability_name'].includes(key))addUniqueCI(out.vulnerabilities,val);
+  if(['malware','malware_family','family'].includes(key))addUniqueCI(out.malware,val);
+  for(const m of val.matchAll(/\bCVE-\d{4}-\d{4,7}\b/gi))addUniqueCI(out.cves,m[0].toUpperCase())
+ }
+ return out
+}
+function securitySummaryText(rep){
+ const f=securityFindings(rep);
+ return `Attack / Threat Values: ${f.attacks.join(', ')||'None explicitly identified'}
+CVE IDs: ${f.cves.join(', ')||'None'}
+Tools / Scanners: ${f.tools.join(', ')||'None'}
+Signatures / Rules: ${f.signatures.join(', ')||'None'}
+Vulnerabilities: ${f.vulnerabilities.join(', ')||'None'}
+Malware Families: ${f.malware.join(', ')||'None'}
+
+WolfAnalyze surfaces values present in the log. It does not infer an attack type from traffic alone.`
+}
+
+function parse(text){
+ const parsed=parseEvents(text),events=parsed.events,ips=uniq(text.match(/\b(?:25[0-5]|2[0-4]\d|1?\d?\d)(?:\.(?:25[0-5]|2[0-4]\d|1?\d?\d)){3}\b/g)||[]),domains=uniq(text.match(/\b(?:[A-Za-z0-9-]+\.)+(?:com|net|org|io|gov|edu|local|test|onion)\b/gi)||[]),ports=[],md5=uniq(text.match(/\b[a-fA-F0-9]{32}\b/g)||[]),sha1=uniq(text.match(/\b[a-fA-F0-9]{40}\b/g)||[]),sha256=uniq(text.match(/\b[a-fA-F0-9]{64}\b/g)||[]),sha512=uniq(text.match(/\b[a-fA-F0-9]{128}\b/g)||[]),alerts=text.match(/\b(?:alert|block|blocked|deny|denied|drop|dropped|reject|rejected|critical|high|sql injection|xss|brute force|reconnaissance|exploit)\b/gi)||[],enc=decodeChr(text);
+ const portKeys=new Set(['srcport','src_port','source_port','sport','dstport','dst_port','destination_port','dport','port']);
+ for(const ev of events)for(const [k,v] of eventFields(ev)){if(portKeys.has(String(k).toLowerCase())&&/^\d{1,5}$/.test(String(v))&&+v<=65535)ports.push(String(v))}
+ return{format:parsed.format,events,lines:events.map(e=>e.raw),ips,domains,ports:uniq(ports),md5,sha1,sha256,sha512,alerts,enc,raw:text}
+}
+function importantEventFields(event){return eventFields(event).filter(([k])=>interestKeys.has(String(k).toLowerCase())||['timestamp','time','date','event_label'].includes(String(k).toLowerCase()))}
+function eventSummaryText(rep){let out='';rep.events.forEach((ev,i)=>{const fs=importantEventFields(ev);if(!fs.length)return;out+=`[EVENT ${i+1}]\n`;for(const [k,v] of fs)out+=`${prettyKey(k)}: ${v}\n`;out+='\n'});return out||'No structured important fields detected.\n'}
+function networkSummaryText(rep){return `IP Addresses: ${rep.ips.join(', ')||'None'}\nDomains: ${rep.domains.join(', ')||'None'}\nPorts: ${rep.ports.join(', ')||'None'}`}
+function hashSummaryText(rep){return `MD5: ${rep.md5.join(', ')||'None'}\nSHA-1: ${rep.sha1.join(', ')||'None'}\nSHA-256: ${rep.sha256.join(', ')||'None'}\nSHA-512: ${rep.sha512.join(', ')||'None'}`}
+function render(rep){
+ $('cEvents').textContent=rep.format==='UNRECOGNIZED TEXT'?0:rep.events.length;$('cIPs').textContent=rep.ips.length;$('cDomains').textContent=rep.domains.length;$('cAlerts').textContent=rep.alerts.length;$('cEnc').textContent=rep.enc.length;
+ let eventHtml=rep.events.slice(0,200).map((ev,i)=>{const fs=eventFields(ev);let b=fs.length?fs.map(([k,v])=>{v=String(v);const l=localize(v),cls=fieldClass(k,v);return `<div class="field"><span class="key">${esc(prettyKey(k))}${interestKeys.has(String(k).toLowerCase())?` <span class="hint">[${esc(k)}]</span>`:''}</span><span class="val">${cls?`<mark class="${cls}">${highlight(v)}</mark>`:highlight(v)}${l?`<br><span class="good">Local time: ${esc(l)}</span>`:''}</span></div>`}).join(''):`<div class="body">${highlight(ev.raw)}</div>`;return `<details><summary>Event ${i+1}</summary><div class="body">${b}</div></details>`}).join('');
+ if(rep.events.length>200)eventHtml+=`<div class="status">Showing first 200 parsed events in the prototype. Raw Original remains complete.</div>`;
+ let encHtml=rep.enc.length?rep.enc.map(x=>`<div class="field"><span class="key">Original</span><span class="val">${esc(x.original)}</span></div><div class="field"><span class="key">Decoded</span><span class="val"><mark class="decoded">${esc(x.decoded)}</mark></span></div>`).join(''):'No recognized CHR() sequences.';
+ const emailSection=rep.format==='EMAIL / EML'?`<details><summary>Email Header Analysis</summary><div class="body">${esc(emailSummaryText(rep))}</div></details>`:'';
+ results.innerHTML=`<details><summary>${rep.format==='UNRECOGNIZED TEXT'?'Unrecognized Input':'Parsed Events ('+rep.events.length+')'} — ${esc(rep.format)}</summary><div class="body">${eventHtml}</div></details>${emailSection}<details><summary>Security Findings / Analyst Interest</summary><div class="body">${esc(securitySummaryText(rep))}</div></details><details><summary>Network Indicators</summary><div class="body">${esc(networkSummaryText(rep))}</div></details><details><summary>Hashes</summary><div class="body">${esc(hashSummaryText(rep))}</div></details><details><summary>Recognized Encoding / Obfuscation (${rep.enc.length})</summary><div class="body">${encHtml}</div></details><details><summary>Highlighted Working View</summary><div class="body">${highlightWorking(workingView(raw))}</div></details><details><summary>Raw Original — Untouched</summary><div class="body raw">${esc(raw)}</div></details>`
+}
+function run(){
+ raw=input.value;
+ if(!raw.trim()){status.textContent='Nothing to analyze.';return}
+ const rep=parse(raw);lastReport=rep;render(rep);
+ if(rep.format==='UNRECOGNIZED TEXT'){
+  status.textContent='No recognizable log structure detected. WolfAnalyze preserved the text but did not treat it as security events.'
+ }else{
+  status.textContent=`Analysis complete. Detected format: ${rep.format}. Raw Original preserved unchanged.`
+ }
+}
+$('analyzeBtn').onclick=run;$('clear').onclick=()=>{input.value='';raw='';lastReport=null;results.innerHTML='<div class="empty">Parsed analyst view will appear here.</div>';['cEvents','cIPs','cDomains','cAlerts','cEnc'].forEach(x=>$(x).textContent='0');reportName.value='WolfAnalyze';fileName='Pasted log';status.textContent='Cleared.'};$('sample').onclick=()=>{input.value=`2026-09-20T00:41:22Z type=attack severity_level=High action=Alert src=19.6.150.138 src_port=56334 dst=172.16.10.10 dst_port=443 http_method=GET http_host=app.example.test http_url="?v=(SELECT (CHR(113)||CHR(120)||CHR(120)||CHR(118)||CHR(113)))" attack_type="SQL Injection"\n2026-09-20T00:42:05Z type=traffic action=ALLOW src=192.168.10.12 dst=198.51.100.42 dst_port=443 proto=TCP domain=update.example.test`;fileName='Safe_sample.log';reportName.value='Safe_sample';run()};;$('localTime').addEventListener('change',()=>{if(raw.trim())run()});$('decode').addEventListener('change',()=>{if(raw.trim())run()});
+const drop=$('drop');['dragenter','dragover'].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.add('drag')}));['dragleave','drop'].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.remove('drag')}));drop.addEventListener('drop',async e=>{
+ const f=e.dataTransfer.files[0];
+ if(!f)return;
+ fileName=f.name;
+ reportName.value=sourceStem(f.name);
+ const overlay=$('overlay'),spinner=overlay.querySelector('.spinner');
+ overlay.classList.add('show');
+ spinner.classList.remove('done','error');
+ $('barFill').style.width='0%';
+ $('pct').textContent='Processing... 0%';
+ $('fileLabel').textContent=`${f.name} — ${fmtBytes(f.size)}`;
+ $('bytes').textContent=`0 bytes / ${fmtBytes(f.size)} processed`;
+ try{
+  let offset=0,parts=[],chunk=1024*1024;
+  if(f.size===0){
+   input.value='';
+   raw='';
+   $('barFill').style.width='100%';
+   $('pct').textContent='Analysis complete.';
+   $('bytes').textContent='0 bytes / 0 bytes processed';
+   spinner.classList.add('done');
+   status.textContent='Empty file loaded. Nothing to analyze.';
+  }else{
+   while(offset<f.size){
+    const end=Math.min(offset+chunk,f.size);
+    parts.push(await f.slice(offset,end).text());
+    offset=end;
+    const p=Math.min(100,Math.round(offset/f.size*100));
+    $('pct').textContent=`Processing... ${p}%`;
+    $('barFill').style.width=p+'%';
+    $('bytes').textContent=`${fmtBytes(offset)} / ${fmtBytes(f.size)} processed`;
+    await new Promise(r=>setTimeout(r,0))
+   }
+   input.value=parts.join('');
+   raw=input.value;
+   $('pct').textContent='Analyzing parsed log...';
+   run();
+   $('pct').textContent='Analysis complete.';
+   $('barFill').style.width='100%';
+   $('bytes').textContent=`${fmtBytes(f.size)} / ${fmtBytes(f.size)} processed`;
+   spinner.classList.add('done')
+  }
+ }catch(err){
+  console.error('WolfAnalyze processing error:',err);
+  spinner.classList.add('error');
+  $('pct').textContent='Analysis error.';
+  status.textContent='Analysis error: '+(err&&err.message?err.message:String(err))
+ }finally{
+  await new Promise(r=>setTimeout(r,500));
+  overlay.classList.remove('show');
+  spinner.classList.remove('done','error')
+ }
+});
+
+function txtReport(){if(!lastReport)return'';let out=`WOLFANALYZE ANALYST REPORT\nVersion: Phase 1.4.6\nReport Name: ${reportBase()}\nInput Format: ${lastReport.format}\nSource File: ${fileName}\nGenerated: ${new Date().toISOString()}\n\n[IMPORTANT EVENT DETAILS]\n${eventSummaryText(lastReport)}\n${lastReport.format==='EMAIL / EML'?'[EMAIL HEADER ANALYSIS]\\n'+emailSummaryText(lastReport)+'\\n\\n':''}[SECURITY FINDINGS / ANALYST INTEREST]\n${securitySummaryText(lastReport)}\n\n[NETWORK INDICATORS]\n${networkSummaryText(lastReport)}\n\n[HASHES]\n${hashSummaryText(lastReport)}\n\n`;
+ lastReport.events.forEach((ev,i)=>{out+=`[EVENT ${i+1}]\n`;const fs=eventFields(ev);if(fs.length)for(const [k,v0] of fs){const v=String(v0);out+=`${prettyKey(k)} [${k}]: ${v}`;const l=localize(v);if(l)out+=` | Local time: ${l}`;out+='\n'}else out+=ev.raw+'\n';out+='\n'});
+ if(lastReport.enc.length){out+='[RECOGNIZED ENCODING / OBFUSCATION]\n';for(const x of lastReport.enc)out+=`Original: ${x.original}\nDecoded: ${x.decoded}\n`;out+='\n'}out+=`[RAW ORIGINAL — UNTOUCHED]\n${raw}\n`;return out}
+$('saveTxt').onclick=()=>{if(!lastReport){status.textContent='Analyze a log first.';return}const b=reportBase();download(b+'.txt','text/plain;charset=utf-8',txtReport());status.textContent=`Report download requested as ${b}.txt.`};
+$('saveHtml').onclick=()=>{if(!lastReport){status.textContent='Analyze a log first.';return}const b=reportBase(),working=highlightWorking(workingView(raw));const html=`<!doctype html><html><head><meta charset="utf-8"><title>${esc(b)}</title><style>body{background:#07111f;color:#e8f2fb;font:14px system-ui;padding:24px}main{max-width:1200px;margin:auto}h1{color:#69c6ff}h1 span{color:#ff5d68}section{background:#0c1a2b;border:1px solid #254765;border-radius:10px;padding:14px;margin:12px 0}pre{white-space:pre-wrap;word-break:break-word;background:#050c14;padding:14px;border-radius:8px}mark{padding:1px 3px;border-radius:3px;color:#081018}mark.net{background:#8de9e2}mark.alert{background:#ff9b9b}mark.method{background:#ffd479}mark.enc{background:#d1a5ff}mark.decoded{background:#ff6b75;font-weight:800}mark.product{background:#7dcfff}mark.resultok{background:#83e3aa}mark.resultbad{background:#ff8f98}mark.proto{background:#8de9e2}mark.hash{background:#ffaaa0}mark.threat{background:#ffb36b;font-weight:800}mark.cve{background:#ff7f87;font-weight:800}mark.tool{background:#c5a3ff;font-weight:800}mark.email{background:#a7d8ff}mark.auth{background:#b9e7ba}mark.attach{background:#ffc89f}</style></head><body><main><h1>Wolf<span>Analyze</span> Analyst Report</h1><p><b>Report:</b> ${esc(b)}<br><b>Input Format:</b> ${esc(lastReport.format)}<br><b>Source File:</b> ${esc(fileName)}<br><b>Generated:</b> ${esc(new Date().toISOString())}</p><section><h2>Important Event Details</h2><pre>${esc(eventSummaryText(lastReport))}</pre></section>${lastReport.format==='EMAIL / EML'?`<section><h2>Email Header Analysis</h2><pre>${esc(emailSummaryText(lastReport))}</pre></section>`:''}<section><h2>Security Findings / Analyst Interest</h2><pre>${esc(securitySummaryText(lastReport))}</pre></section><section><h2>Network Indicators</h2><pre>${esc(networkSummaryText(lastReport))}</pre></section><section><h2>Hashes</h2><pre>${esc(hashSummaryText(lastReport))}</pre></section><section><h2>Highlighted Working View</h2><pre>${working}</pre></section><section><h2>Recognized Encoding / Obfuscation</h2><pre>${lastReport.enc.length?lastReport.enc.map(x=>'Original: '+esc(x.original)+'\nDecoded: '+esc(x.decoded)).join('\n\n'):'None detected.'}</pre></section><section><h2>Raw Original — Untouched</h2><pre>${esc(raw)}</pre></section></main></body></html>`;download(b+'.html','text/html;charset=utf-8',html);status.textContent=`Report download requested as ${b}.html.`};
+$('localTime').onchange=()=>{if(raw)run()};$('decode').onchange=()=>{if(raw)run()};
+</script></body></html>
